@@ -1,0 +1,28 @@
+<div class="looper">
+    <div class="looper__screen row">
+        <div class="looper__position">
+            <span>{{ looper.position.tick}}</span>:<span>{{ looper.position.bar}}</span>
+        </div>
+        <div class="looper__screen__ticks"></div>
+    </div>
+
+    <md-input-container>
+        <label>BPM</label>
+        <input type="number" min="1" max="320" ng-model="looper.bpm" aria-label="{{ looper.bpm }}"></input>
+    </md-input-container>
+
+    <md-input-container>
+        <label>Beats per bar</label>
+        <input type="number" ng-model="looper.signature.top"></input>
+    </md-input-container>
+
+
+    <md-button class="md-fab" aria-label="Stop looper" ng-click="looper.stop()">
+        <md-icon class="material-icons">stop</md-icon>
+    </md-button>
+
+    <md-button class="md-fab" aria-label="Play/Pause looper" ng-click="looper.togglePlay()">
+        <md-icon ng-show="!looper.isPlaying()" class="material-icons">play_arrow</md-icon>
+        <md-icon ng-show="looper.isPlaying()" class="material-icons">pause</md-icon>
+    </md-button>
+</div>

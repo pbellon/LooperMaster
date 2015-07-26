@@ -1,3 +1,4 @@
+/* globals bpm, console */
 class LooperDirective {
     constructor(){
         'ngInject';
@@ -16,31 +17,79 @@ class LooperDirective {
 class LooperController {
     constructor($scope){
         'ngInject';
-        
+
+        // console.log(bpm);
+
         this.signature = {
             top: 4,
             bottom: 4
         };
+        this.position = {tick: 0, bar: 0};
+        this.playing = false;
         this.bpm = 120;
+        this.bpmInstance = bpm.init({bpm: this.bpm, signature: this.getSignature(), onTick: (position)=> this.onTick(position)});
         this.$scope = $scope;
-        this.$scope.$watch('looper.bpm', this.onBPMChanged);
-        this.$scope.$watch('looper.signature', this.onSignatureChanged);
+
+        this.$scope.$watch('looper.bpm', (newVal, oldVal)=> {
+            if(newVal && oldVal && (newVal !== oldVal)){
+                console.log('oldval', oldVal, 'newVal: ', newVal);
+                this.onBPMChanged();
+            }
+        }, true);
+        this.$scope.$watch('looper.signature', (newVal, oldVal)=> {
+            if(newVal && oldVal && (newVal !== oldVal)){
+                this.onSignatureChanged(arguments);
+            }
+        }, true);
+
+    }
+
+    getSignature(){
+        return [this.signature.top, this.signature.bottom];
+    }
+
+    togglePlay(){
+        if(!this.isPlaying()){
+            this.play();
+        } else {
+            this.pause();
+        }
+    }
+
+    onTick(position){
+        console.log('onTick: ', position);
+        this.position = position || {tick: 0, bar: 0};
+        this.$scope.$digest();
+    }
+
+    isPlaying(){
+        return this.playing;
     }
 
     play(){
+        this.playing = true;
         this.bpmInstance.play();
     }
 
     pause(){
+        this.playing = false;
         this.bpmInstance.pause();
     }
 
+    stop(){
+        this.playing = false;
+        this.position = {tick: 0, bar: 0};
+        this.bpmInstance.stop();
+    }
+
     onBPMChanged(){
+        console.log('onBPMChanged', arguments);
         this.bpmInstance.setBPM(this.bpm);
     }
+
     onSignatureChanged(){
-        let signature = this.signature;
-        this.bpmInstance.setSignature([signature.top, signature.bottom]);
+        console.log('onSignatureChanged');
+        this.bpmInstance.setSignature(this.getSignature());
     }
 }
 

@@ -7,7 +7,7 @@ import MainController from './main/main.controller';
 import LooperDirective from './components/looper/looper.directive';
 
 angular.module('loopMaster', ['ngAnimate', 'ngTouch', 'ui.router', 'ngMaterial'])
-  .directive(LooperDirective)
+  .directive('looper', ()=> new LooperDirective())
   .config(config)
   .config(routerConfig)
   .run(runBlock)
