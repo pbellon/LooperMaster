@@ -18,8 +18,6 @@ class LooperController {
     constructor($scope){
         'ngInject';
 
-        // console.log(bpm);
-
         this.signature = {
             top: 4,
             bottom: 4
@@ -27,18 +25,22 @@ class LooperController {
         this.position = {tick: 0, bar: 0};
         this.playing = false;
         this.bpm = 120;
-        this.bpmInstance = bpm.init({bpm: this.bpm, signature: this.getSignature(), onTick: (position)=> this.onTick(position)});
+        this.bpmInstance = bpm.init({
+            bpm: this.bpm,
+            signature: this.getSignature(),
+            onTick: (position)=> this.onTick(position)
+        });
+
         this.$scope = $scope;
 
         this.$scope.$watch('looper.bpm', (newVal, oldVal)=> {
             if(newVal && oldVal && (newVal !== oldVal)){
-                console.log('oldval', oldVal, 'newVal: ', newVal);
                 this.onBPMChanged();
             }
         }, true);
         this.$scope.$watch('looper.signature', (newVal, oldVal)=> {
             if(newVal && oldVal && (newVal !== oldVal)){
-                this.onSignatureChanged(arguments);
+                this.onSignatureChanged();
             }
         }, true);
 
@@ -57,7 +59,6 @@ class LooperController {
     }
 
     onTick(position){
-        console.log('onTick: ', position);
         this.position = position || {tick: 0, bar: 0};
         this.$scope.$digest();
     }
@@ -83,12 +84,10 @@ class LooperController {
     }
 
     onBPMChanged(){
-        console.log('onBPMChanged', arguments);
         this.bpmInstance.setBPM(this.bpm);
     }
 
     onSignatureChanged(){
-        console.log('onSignatureChanged');
         this.bpmInstance.setSignature(this.getSignature());
     }
 }
