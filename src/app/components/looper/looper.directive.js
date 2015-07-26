@@ -55,16 +55,8 @@ class LooperController {
     }
 
     isTickActive(tickNumber){
-        let active = false;
         let currentTick = this.position.tick;
-        let currentBar  = this.position.bar;
-        if(currentTick === 0 && currentBar > 0){
-            active = true;
-        } else {
-            active = tickNumber < currentTick && this.isPlaying();
-        }
-        // console.log('active ? ', active,'at', tickNumber, 'current tick: ', currentTick);
-        return active;
+        return tickNumber < currentTick+1 && this.isPlaying();
     }
 
     getSignature(){
@@ -80,8 +72,9 @@ class LooperController {
     }
 
     onTick(position){
-        this.position = position || {tick: 0, bar: 0};
-        this.$scope.$digest();
+        this.$scope.$apply(()=>{
+            this.position = position || {tick: 0, bar: 0};
+        });
     }
 
     isPlaying(){
