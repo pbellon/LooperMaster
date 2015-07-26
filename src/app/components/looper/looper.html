@@ -1,9 +1,14 @@
 <div class="looper">
-    <div class="looper__screen row">
+    <div class="looper__screen">
         <div class="looper__position">
             <span>{{ looper.position.tick}}</span>:<span>{{ looper.position.bar}}</span>
         </div>
-        <div class="looper__screen__ticks"></div>
+        <ul class="looper__ticks">
+            <li class="looper__tick"
+                ng-repeat="tick in looper.listTicks()"
+                ng-class="looper.isTickActive($index) ? 'looper__tick--active' : ''">
+            </li>
+        </ul>
     </div>
 
     <md-input-container>

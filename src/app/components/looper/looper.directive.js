@@ -46,6 +46,27 @@ class LooperController {
 
     }
 
+    listTicks(){
+        let ticks = [];
+        for (var i = 0; i < this.signature.top; i++) {
+            ticks.push(i);
+        }
+        return ticks;
+    }
+
+    isTickActive(tickNumber){
+        let active = false;
+        let currentTick = this.position.tick;
+        let currentBar  = this.position.bar;
+        if(currentTick === 0 && currentBar > 0){
+            active = true;
+        } else {
+            active = tickNumber < currentTick && this.isPlaying();
+        }
+        // console.log('active ? ', active,'at', tickNumber, 'current tick: ', currentTick);
+        return active;
+    }
+
     getSignature(){
         return [this.signature.top, this.signature.bottom];
     }
