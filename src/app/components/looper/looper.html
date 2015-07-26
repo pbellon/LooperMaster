@@ -1,4 +1,4 @@
-<div class="looper">
+<div class="looper" layout-fill layout="column">
     <div class="looper__screen">
         <div class="looper__position">
             <span>{{ looper.position.tick + 1}}</span>:<span>{{ looper.position.bar}}</span>
@@ -11,7 +11,7 @@
         </ul>
     </div>
 
-    <md-input-container>
+    <md-input-container layout-fill>
         <label>BPM</label>
         <input type="number" min="1" max="320" ng-model="looper.bpm" aria-label="{{ looper.bpm }}"></input>
     </md-input-container>
@@ -21,13 +21,14 @@
         <input type="number" ng-model="looper.signature.top"></input>
     </md-input-container>
 
+    <div layout="row" layout-align="end end">
+        <md-button layout-align="end end" class="md-fab md-mini" aria-label="Stop looper" ng-click="looper.stop()">
+            <md-icon class="material-icons">stop</md-icon>
+        </md-button>
 
-    <md-button class="md-fab" aria-label="Stop looper" ng-click="looper.stop()">
-        <md-icon class="material-icons">stop</md-icon>
-    </md-button>
-
-    <md-button class="md-fab" aria-label="Play/Pause looper" ng-click="looper.togglePlay()">
-        <md-icon ng-show="!looper.isPlaying()" class="material-icons">play_arrow</md-icon>
-        <md-icon ng-show="looper.isPlaying()" class="material-icons">pause</md-icon>
-    </md-button>
+        <md-button layout-align="end end" class="md-fab md-mini" aria-label="Play/Pause looper" ng-click="looper.togglePlay()">
+            <md-icon ng-show="!looper.isPlaying()" class="material-icons">play_arrow</md-icon>
+            <md-icon ng-show="looper.isPlaying()" class="material-icons">pause</md-icon>
+        </md-button>
+    </div>
 </div>

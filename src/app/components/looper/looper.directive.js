@@ -23,7 +23,7 @@ class LooperController {
             bottom: 4
         };
         this.position = {tick: 0, bar: 0};
-        this.playing = false;
+        this.playing = this.paused = false;
         this.bpm = 120;
         this.bpmInstance = bpm.init({
             bpm: this.bpm,
@@ -56,7 +56,7 @@ class LooperController {
 
     isTickActive(tickNumber){
         let currentTick = this.position.tick;
-        return tickNumber < currentTick+1 && this.isPlaying();
+        return tickNumber < currentTick+1 && (this.isPlaying() || this.isPaused());
     }
 
     getSignature(){
@@ -80,14 +80,19 @@ class LooperController {
     isPlaying(){
         return this.playing;
     }
+    isPaused(){
+        return this.paused;
+    }
 
     play(){
         this.playing = true;
+        this.paused = false;
         this.bpmInstance.play();
     }
 
     pause(){
         this.playing = false;
+        this.paused = true;
         this.bpmInstance.pause();
     }
 

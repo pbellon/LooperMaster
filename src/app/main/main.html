@@ -1,12 +1,16 @@
 <div layout="vertical" layout-fill>
 
-  <md-content>
-    <header>
-        <h1>Looper Master</h1>
-    </header>
-    <div class="main">
-        <looper></looper>
-    </div>
-  </md-content>
+    <md-content  layout-align="center center" layout="column">
+        <header>
+            <h1 class="md-display-3">Looper Master</h1>
+        </header>
+
+        <looper layout-align="center center" layout-wrap flex="75"></looper>
+
+        <footer layout-align="center end" flex="50">
+            This application was realised thanks to <a href="https://github.com/pbellon/BPMjs">BPMjs</a>, a library to deal with tempo in JavaScript
+        </footer>
+    </md-content>
+
 
 </div>
